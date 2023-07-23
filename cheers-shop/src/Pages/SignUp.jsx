@@ -1,6 +1,6 @@
 import React, { useState,useContext  } from "react";
 import { Box, Flex, Input, Button, FormControl, FormLabel, Stack, Text,Center } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useToast } from '@chakra-ui/react'
 
 import { AuthContext } from "../Context/AuthContextProvide";
 
@@ -16,6 +16,7 @@ const SignUpForm = () => {
   })
 
   const {formData,setformData,handleGetData} = useContext(AuthContext)
+  const toast = useToast()
     const handleLoginSubmit = (e)=>{
         handleGetData(e)
     }
@@ -25,7 +26,13 @@ const SignUpForm = () => {
     e.preventDefault()
     //console.log(data)
     localStorage.setItem("user",JSON.stringify(data))
-   
+    toast({
+      title: 'Account created.',
+      description: "We've created your account for you.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
   }
   return (
     
