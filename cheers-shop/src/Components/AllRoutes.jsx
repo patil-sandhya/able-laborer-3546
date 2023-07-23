@@ -5,6 +5,8 @@ import { Container } from '@chakra-ui/react'
 import SignUpForm from "../Pages/SignUp";
 import SingleProduct from "../Pages/SingleProduct";
 import Wine from "../Pages/wine";
+import PrivateRoute from './PrivateRoute'
+import Cart from "../Pages/Cart";
 function AllRoutes() {
   // import the chakra UI components from the chakra UI library , and remove the following.
   //const Container = ()=><div></div>;
@@ -16,6 +18,10 @@ function AllRoutes() {
     <Route element={<SignUpForm />} path="/sign-up"></Route>
     <Route element={<Wine />} path="/wine"></Route>
     <Route element={<SingleProduct />} path="/one-product/:id"></Route>
+    <Route path="/cart" 
+                element={<PrivateRoute>
+                <Cart/></PrivateRoute>
+                } ></Route>
     </Routes>
     </Container>
   );

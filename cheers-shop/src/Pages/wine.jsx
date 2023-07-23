@@ -9,7 +9,7 @@ import WineCard from "../Components/WineCard";
 const Wine = () => {
     const [state, dispatch] = useReducer(wineReducer,initState)
     
-    const [numOfData, setNumof] = useState(5)
+    const [numOfData, setNumof] = useState(4)
     const [sortOn, setSortOn] = useState('Productprice')
     const [sortBy, setSortBy] = useState("asc")
     const [page, setPage] = useState(1) 
@@ -74,16 +74,14 @@ const Wine = () => {
       <Flex>
         {/* 30% Left Section */}
         <Box flex="1" p="1rem">
-          <Select placeholder="Sort By Price" size="2xl">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+          <Select placeholder="Sort On" size="2xl" onChange={(e) => setSortOn(e.target.value)}>
+          <option value='rating'>Rating</option>
+          <option value='productPrice'>Price Starts From</option>
           </Select>
         <div style={{marginTop:"20px"}}>
-            <Select placeholder="Sort By Price" size="2xl">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            <Select placeholder="Sort By" size="2xl" onChange={(e) => setSortBy(e.target.value)}>
+            <option value='asc'>Ascending</option>
+              <option value='desc'>Descending</option>
             </Select>
         </div>
         </Box>

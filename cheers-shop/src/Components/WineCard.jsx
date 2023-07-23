@@ -1,46 +1,74 @@
 import { Card,CardBody,Image,Stack,Heading,Link,Text,Button,VStack,HStack } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
-
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useToast } from '@chakra-ui/react'
 function WineCard({productName,
   rating,
+  imageUrlTwo,
+  iconNamesTw,
+  productPrice,
   productCode,
-  productDescription,
-  productImageHref,
-  redWine,
-  roseWine,
-  southAfrica,
-  italy,
-  initials,
-  imgFluidSrc2,
-  imgFluidSrc3,
-  imgFluidSrc4,
-  imgFluidSrc5,
+  imageUrlThr,
   id,}) {
-    console.log(productName)
-const handleDelete = ()=>{
-  console.log("dd")
+    //console.log(imageUrlTwo)
+    const toast = useToast()
+const handleCartData = ()=>{
+  let cartData = JSON.parse(localStorage.getItem("cart")) || []
+  let idData = JSON.parse(localStorage.getItem("idData")) || []
+  if(idData.includes(id)){ 
+    toast({
+      title: 'In Cart.',
+      description: "Product is already added.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+  }else{
+    let newObj = {
+      "id":id,
+      "price":productPrice,
+      "qty":1,
+      "totalPrice":productPrice
+    }
+    idData.push(id)
+    cartData.push(newObj)
+    localStorage.setItem("cart", JSON.stringify(cartData))
+    localStorage.setItem("idData", JSON.stringify(idData))
+
+    toast({
+      title: 'Added',
+      description: "Product Added To Cart !",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
+ 
+}
+
+const navigateSingleProduct = useNavigate()
+const handleRedirect = ()=>{
+
+  navigateSingleProduct(`/one-product/${id}`)
 }
   return (
-    <Card maxW="sm" m={4} data-testid="restaurant-card">
+    <Card maxW="lg" m={4} data-testid="restaurant-card">
       <CardBody>
         <VStack align="stretch">
           {/* Add Image here */}
-          <Image src={productImageHref} alt='img' />
+          <Image style={{height:"400px"}} src={imageUrlTwo} alt='img' onClick={handleRedirect}/>
           <Stack mt="6" spacing="3">
           <Heading as='h4' size='md'> Name : {productName}
         </Heading>
-        <Text>Type : {redWine}</Text>
+        <Text>Product Code : {productCode}</Text>
         <Text>Rating : {rating}</Text>
-        <Text>Number of votes : {}</Text>
-        <Text>Price Starts From : {}</Text>
+        <Text>Icon Name : {iconNamesTw} <Image src={imageUrlThr} style={{marginLeft:"120px"}} alt='img' /></Text>
+        <Text>Price : {productPrice}</Text>
 
             {/* Add Heading and Text tags here */}
             <HStack spacing="6">
               {/* Add EDIT Link and DELETE Button here */}
-              <Link as={RouterLink} to={`/edit-restaurant/${id}`}>
-              <Button>EDIT</Button>
-              </Link>
-              <Button onClick={handleDelete}>DELETE</Button>
+             
+              <Button  style={{height:"45px", fontSize:"15px", backgroundColor:"rgb(119, 18, 88)", color:"white", marginLeft:"100px"}} onClick={handleCartData}>Add To Cart</Button>
             </HStack>
           </Stack>
         </VStack>

@@ -1,10 +1,17 @@
-import React from 'react'
-import { Box,Link, Flex, Spacer, IconButton, useDisclosure, VStack, HStack } from "@chakra-ui/react";
+import React, {useContext} from 'react'
+import { Box,Link, Flex, Spacer, IconButton, useDisclosure, VStack, HStack, Button } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Image } from '@chakra-ui/react';
+import { AuthContext } from '../Context/AuthContextProvide';
 import Logo from '../Logo2.png'
 const Navbar = () => {
     const { isOpen, onToggle } = useDisclosure();
+    const isAuth= localStorage.getItem("auth")
+      let userName = JSON.parse(localStorage.getItem("user")) || []
+    
+      const handleLogout = ()=>{
+        localStorage.removeItem("auth");
+      }
   return (
     <>
     <Flex
@@ -42,17 +49,21 @@ const Navbar = () => {
       </HStack>
     </Box>
     <Spacer />
-    <h1>Welcome</h1>
+    {
+      (isAuth) && <h1>Welcome {userName.name}</h1>
+    }
+    
     <Spacer />
 
     <Box display={{ base: isOpen ? "block" : "none", md: "block" }}>
       <HStack spacing={4}>
-        <a href="#">Login</a>
-        <a href="/sign-up">Sign Up</a>
+      {
+        (isAuth) ? <a href="/" onClick={handleLogout}>Logout</a>:<a href="/sign-up">Login/Sign Up</a>
+      }
+        
         <a href="/">Home</a>
         <a href="/wine">Wine</a>
-        <a href="#">Cart</a>
-        <a href="#">Contact</a>
+        <a href="/cart">Cart</a>
       </HStack>
     </Box>
   </Flex>
