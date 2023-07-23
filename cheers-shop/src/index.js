@@ -8,11 +8,15 @@ import { BrowserRouter} from 'react-router-dom';
 import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
 import theme from './Components/theme';
+import AuthContextProvide from './Context/AuthContextProvide';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ChakraProvider theme={theme}>
   <BrowserRouter>
+  <AuthContextProvide>
     <App />
+    </AuthContextProvide>
     </BrowserRouter>
   </ChakraProvider>
 );

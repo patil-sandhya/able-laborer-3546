@@ -7,7 +7,7 @@ export const getWine = (param) => {
         _sort: param.sortOn,
         _order: param.sortBy
       }
-  return  axios.get(`https://cheers-shop-api.onrender.com/drinks`, {params})
+  return  axios.get(`https://api-cheers-ltda.onrender.com/drinks`, {params})
 };
 
 export const getSingleRestaurant = () => {};

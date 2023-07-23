@@ -5,7 +5,7 @@ import { FaTwitter, FaInstagram, FaFacebook, FaLinkedin } from "@chakra-ui/icons
 const Footer = () => {
   return (
     <>
-    <Box bg="gray.800" color="white" py="50px">
+    <Box bg="rgb(85, 21, 72)" color="white" py="50px">
       <Flex justify="space-between" maxW="1200px" mx="auto" px="20px">
         {/* Section 1 */}
         <Box>
@@ -21,19 +21,21 @@ const Footer = () => {
         {/* Section 2 */}
         <Box>
           <Text fontSize="lg" fontWeight="bold" mb="1rem">
-            Section 2
+          Company
           </Text>
-         
+          
+          <p><a href="projects.html">Our Work</a></p>
+          <p><a href="">Community</a></p>
+          <p><a href="">Carrer</a></p>
         </Box>
 
         {/* Section 3 */}
         <Box>
           <Text fontSize="lg" fontWeight="bold" mb="1rem">
-            Section 3
+          Follow Us
           </Text>
-          <Text>
-            Content for section 3 goes here.
-          </Text>
+          <p><a href="https://www.instagram.com/">Instagram</a></p>
+          <p><a href="https://twitter.com/">Twitter</a></p>
         </Box>
 
         {/* Section 4 */}
