@@ -15,6 +15,11 @@ const AuthContextProvide = (props)=>{
         localStorage.setItem("auth",true)
         setisAuth(true)
         navigateHome("/cart")
+        toast({
+            title: `Login Successful !`,
+            status: 'error',
+            isClosable: true,
+          })
     }
     const handleGetData = (e)=>{
         e.preventDefault()

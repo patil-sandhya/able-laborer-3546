@@ -1,14 +1,18 @@
-import React, {useContext} from 'react'
-import { Box,Link, Flex, Spacer, IconButton, useDisclosure, VStack, HStack, Button } from "@chakra-ui/react";
+import React from 'react'
+import { Box,Flex, Spacer, IconButton, useDisclosure, HStack } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Image } from '@chakra-ui/react';
-import { AuthContext } from '../Context/AuthContextProvide';
 import Logo from '../Logo2.png'
+import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
     const { isOpen, onToggle } = useDisclosure();
     const isAuth= localStorage.getItem("auth")
       let userName = JSON.parse(localStorage.getItem("user")) || []
-    
+      const navigateHome = useNavigate()
+      const handleLogo = ()=>{
+        navigateHome("/")
+      }
+
       const handleLogout = ()=>{
         localStorage.removeItem("auth");
       }
@@ -45,25 +49,25 @@ const Navbar = () => {
       w="100%" h="70px" 
       objectFit='cover'
       src={Logo}      alt='Logo'
+      onClick={handleLogo}
     />
       </HStack>
     </Box>
     <Spacer />
     {
-      (isAuth) && <h1>Welcome {userName.name}</h1>
+      (isAuth) && <h2>Welcome {userName.name}</h2>
     }
     
     <Spacer />
 
-    <Box display={{ base: isOpen ? "block" : "none", md: "block" }}>
+    <Box display={{ base: isOpen ? "block" : "none", md: "block" }} fontSize="2xl">
       <HStack spacing={4}>
-      {
-        (isAuth) ? <a href="/" onClick={handleLogout}>Logout</a>:<a href="/sign-up">Login/Sign Up</a>
-      }
-        
-        <a href="/">Home</a>
+        <a href="/" >Home</a>
         <a href="/wine">Wine</a>
         <a href="/cart">Cart</a>
+        {
+          (isAuth) ? <a href="/" onClick={handleLogout}>Logout</a>:<a href="/sign-up">Login/SignUp</a>
+        }
       </HStack>
     </Box>
   </Flex>

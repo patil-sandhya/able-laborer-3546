@@ -9,30 +9,40 @@ const SingleProduct = () => {
   let navigateCart = useNavigate()
   const param = useParams()
   const toast = useToast()
+
   const handleCartData = ()=>{
     let cartData = JSON.parse(localStorage.getItem("cart")) || []
-    
-    if(cartData.includes(param.id)){ 
-      toast({
-        title: 'In Cart.',
-        description: "Product is already added.",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      })
-      navigateCart("/cart")
-    }else{
-      cartData.push(param.id)
-      localStorage.setItem("cart", JSON.stringify(cartData))
-      toast({
-        title: 'Added',
-        description: "Product Added To Cart !",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      })
-      navigateCart("/cart")
+  let idData = JSON.parse(localStorage.getItem("idData")) || []
+  if(idData.includes(productData.id)){ 
+    toast({
+      title: 'In Cart.',
+      description: "Product is already added.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+    navigateCart("/cart")
+  }else{
+    let newObj = {
+      "id":productData.id,
+      "price":productData.productPrice,
+      "qty":1,
+      "totalPrice":productData.productPrice
     }
+    idData.push(productData.id)
+    cartData.push(newObj)
+    localStorage.setItem("cart", JSON.stringify(cartData))
+    localStorage.setItem("idData", JSON.stringify(idData))
+
+    toast({
+      title: 'Added',
+      description: "Product Added To Cart !",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+    navigateCart("/cart")
+  }
    
   }
   const getProducts = async (id)=>{
