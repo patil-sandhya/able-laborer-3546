@@ -22,11 +22,13 @@ const Navbar = () => {
     as="nav"
     align="center"
     justify="space-between"
-    wrap="wrap"
+    width="full"
     padding="1rem"
     paddingLeft="2rem"
     paddingRight="2rem"    bg="rgb(119, 18, 88)"
     color="white"
+    m="0px"
+  
   >
     <IconButton
       display={{ base: "block", md: "none" }}
@@ -60,8 +62,8 @@ const Navbar = () => {
     
     <Spacer />
 
-    <Box display={{ base: isOpen ? "block" : "none", md: "block" }} fontSize="2xl">
-      <HStack spacing={4}>
+    <Box display={{ base: isOpen ? "block" : "none", md: "block" }} m={0} fontSize="2xl" >
+      <HStack spacing={4} >
         <a href="/" >Home</a>
         <a href="/wine">Wine</a>
         <a href="/cart">Cart</a>
