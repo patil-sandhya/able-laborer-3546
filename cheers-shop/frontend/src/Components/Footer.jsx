@@ -7,9 +7,9 @@ const Footer = () => {
     <>
     <Box bg="rgb(85, 21, 72)" color="white" py="50px">
       <Flex justify="space-between" maxW="1200px" mx="auto" px="20px">
-        {/* Section 1 */}
+        {/* Address Section  */}
         <Box>
-          <Text fontSize="lg" fontWeight="bold" mb="1rem">
+          <Text fontSize="2xl" fontWeight="bold" mb="1rem">
            Address
           </Text>
           <Text>
@@ -18,30 +18,30 @@ const Footer = () => {
           </Text>
         </Box>
 
-        {/* Section 2 */}
+        {/* Company Section  */}
         <Box>
-          <Text fontSize="lg" fontWeight="bold" mb="1rem">
+          <Text fontSize="2xl" fontWeight="bold" mb="1rem">
           Company
           </Text>
           
           <p><a href="projects.html">Our Work</a></p>
           <p><a href="">Community</a></p>
-          <p><a href="">Carrer</a></p>
+          <p><a href="">Career</a></p>
         </Box>
 
-        {/* Section 3 */}
+        {/* Follow Section  */}
         <Box>
-          <Text fontSize="lg" fontWeight="bold" mb="1rem">
+          <Text fontSize="2xl" fontWeight="bold"  mb="2rem">
           Follow Us
           </Text>
           <p><a href="https://www.instagram.com/">Instagram</a></p>
           <p><a href="https://twitter.com/">Twitter</a></p>
         </Box>
 
-        {/* Section 4 */}
+        {/*Rights Section  */}
         <Box>
-          <Text fontSize="lg" fontWeight="bold" mb="1rem">
-          Cheers! Shop © 2023. All rights reserved.
+          <Text fontSize="2xl" fontWeight="bold" mb="1rem">
+          Cheers! Shop © 2024. All rights reserved.
           </Text>
           
         </Box>

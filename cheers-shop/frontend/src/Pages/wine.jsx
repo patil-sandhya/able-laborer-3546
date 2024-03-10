@@ -10,8 +10,8 @@ const Wine = () => {
     const [state, dispatch] = useReducer(wineReducer,initState)
     
     const [numOfData, setNumof] = useState(4)
-    const [sortOn, setSortOn] = useState('Productprice')
-    const [sortBy, setSortBy] = useState("asc")
+    const [sortOn, setSortOn] = useState('productPrice')
+    const [sortBy, setSortBy] = useState("1")
     const [page, setPage] = useState(1) 
     const [pageNum, setPageNum] = useState(1)
   
@@ -28,9 +28,9 @@ const Wine = () => {
         })
         let res = await getWine({pageNum,numOfData,sortOn,sortBy})
         let data = await (res.data)
-        let pages= await res.headers.get(`X-Total-Count`)
-        let total = Math.floor(pages/numOfData)
-        console.log(total)
+        //let pages= await res.headers.get(`X-Total-Count`)
+        let total = Math.floor(24/numOfData)
+        console.log(res)
         setPage(total)
       dispatch({
         type:"FETCH_SUCCESS",
@@ -63,36 +63,36 @@ const Wine = () => {
       {/* Welcome Section */}
       <Flex justify="center" direction="column" alignItems="center" mb="2rem">
         <Heading as="h1" size="xl" textAlign="center">
-          Welcome to cheers
+        Wine Exploration Zone: 
         </Heading>
-        <Text textAlign="center">This is the paragraph with some content.</Text>
+        <Text textAlign="center">Where Every Sip Tells a Story...</Text>
         <Divider my="1rem" />
         
       </Flex>
 
-      {/* Select Option and Data Section */}
+      {/* Select Option Section */}
       <Flex>
         {/* 30% Left Section */}
         <Box flex="1" p="1rem">
           <Select placeholder="Sort On" size="2xl" onChange={(e) => setSortOn(e.target.value)}>
           <option value='rating'>Rating</option>
-          <option value='productPrice'>Price Starts From</option>
+          <option value='productPrice'>Price </option>
           </Select>
         <div style={{marginTop:"20px"}}>
-            <Select placeholder="Sort By" size="2xl" onChange={(e) => setSortBy(e.target.value)}>
-            <option value='asc'>Ascending</option>
-              <option value='desc'>Descending</option>
+            <Select placeholder="Sort By" size="2xl" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value='1'>Ascending</option>
+              <option value='-1'>Descending</option>
             </Select>
         </div>
         </Box>
 
-        {/* 70% Right Section */}
+        {/* Product  Section */}
         <Box flex="3" p="1rem">
             {/* Product Cards */}
             <Grid
-              templateColumns="repeat(2, 1fr)" // Display two cards in a row
-              gap="2rem" // Add some gap between the cards
-              justifyContent="center" // Center the cards horizontally
+              templateColumns="repeat(2, 1fr)" 
+              gap="2rem" 
+              justifyContent="center" 
             > 
           {
             state.data.map((item)=>(
@@ -103,7 +103,7 @@ const Wine = () => {
            </Box>
       </Flex>
 
-      {/* Rounded Button Section */}
+      {/* Pagination Section */}
       <Flex justify="center" mt="2rem">
       <Pagination totalPage={page} handlePage={handlePage} />
       </Flex>

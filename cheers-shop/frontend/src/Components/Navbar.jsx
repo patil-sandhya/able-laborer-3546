@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box,Flex, Spacer, IconButton, useDisclosure, HStack } from "@chakra-ui/react";
+import { Box,Flex, Spacer, IconButton, useDisclosure, HStack, Link } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Image } from '@chakra-ui/react';
 import Logo from '../Logo2.png'
@@ -25,7 +25,8 @@ const Navbar = () => {
     width="full"
     padding="1rem"
     paddingLeft="2rem"
-    paddingRight="2rem"    bg="rgb(119, 18, 88)"
+    paddingRight="2rem"    
+    bg="rgb(119, 18, 88)"
     color="white"
     m="0px"
   
@@ -50,7 +51,9 @@ const Navbar = () => {
       <Image
       w="100%" h="70px" 
       objectFit='cover'
-      src={Logo}      alt='Logo'
+      src={Logo}      
+      display={{ base: 'none', md: 'block' }}
+      alt='Logo'
       onClick={handleLogo}
     />
       </HStack>
@@ -64,11 +67,12 @@ const Navbar = () => {
 
     <Box display={{ base: isOpen ? "block" : "none", md: "block" }} m={0} fontSize="2xl" >
       <HStack spacing={4} >
-        <a href="/" >Home</a>
-        <a href="/wine">Wine</a>
-        <a href="/cart">Cart</a>
+        <Link href="/" _hover={{ fontWeight: 'bold',color:"rgb(119, 18, 88)", backgroundColor: 'white', textDecoration:"none", borderRadius:"5px"}} mr={1} p={2}>Home</Link>
+        <Link href="/wine" _hover={{ fontWeight: 'bold',color:"rgb(119, 18, 88)", backgroundColor: 'white', textDecoration:"none", borderRadius:"5px"}} mr={1} p={2}>Wine</Link>
+        <Link href="/cart" _hover={{ fontWeight: 'bold',color:"rgb(119, 18, 88)", backgroundColor: 'white', textDecoration:"none", borderRadius:"5px"}} mr={1} p={2}>Cart</Link>
+        
         {
-          (isAuth) ? <a href="/" onClick={handleLogout}>Logout</a>:<a href="/sign-up">Login/SignUp</a>
+          (isAuth) ? <Link  _hover={{ fontWeight: 'bold',color:"rgb(119, 18, 88)", backgroundColor: 'white', textDecoration:"none", borderRadius:"5px"}} mr={1} p={2} href="/" onClick={handleLogout}>Logout</Link>:<Link  _hover={{ fontWeight: 'bold',color:"rgb(119, 18, 88)", backgroundColor: 'white', textDecoration:"none", borderRadius:"5px"}} mr={1} p={2} href="/sign-up">Login/SignUp</Link>
         }
       </HStack>
     </Box>

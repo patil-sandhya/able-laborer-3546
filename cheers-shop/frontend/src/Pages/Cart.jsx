@@ -74,8 +74,8 @@ const Cart = () => {
           {/* Right Section */}
           <Box flex="1" p="1rem">
           <Flex
-              justify="flex-start" // Align content to the top
-              alignItems="flex-start" // Align content to the left
+              justify="flex-start" 
+              alignItems="flex-start" 
               flexDirection="column"
           ><Text fontSize="3xl" fontWeight="bold" mb="1rem">
           Price Details 
@@ -89,7 +89,7 @@ const Cart = () => {
           </Text>
               <Button  style={{height:"45px", fontSize:"15px", backgroundColor:"rgb(119, 18, 88)", color:"white", marginLeft:"100px"}} onClick={shopNow}>Continue</Button>
               <ShopNowModal isOpen={isModalOpen} total={total} item={data.length} onClose={onCloseModal} />
-              {/* Add more invoice details as needed */}
+              
           </Flex>
       </Box>
       

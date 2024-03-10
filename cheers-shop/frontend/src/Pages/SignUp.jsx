@@ -1,12 +1,12 @@
 import React, { useState,useContext  } from "react";
-import { Box, Flex, Input, Button, FormControl, FormLabel, Stack, Text,Center } from "@chakra-ui/react";
+import { Box, Flex,InputRightElement, Input, Button, FormControl, FormLabel, Stack, Text,Center, InputGroup } from "@chakra-ui/react";
 import { useToast } from '@chakra-ui/react'
-
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { AuthContext } from "../Context/AuthContextProvide";
 
 const SignUpForm = () => {
   const {isAuth} = useContext(AuthContext)
-
+  const [showPassword, setShowPassword] = useState(false);
   const [data,setData] = useState({
     name:"",
     email:"",
@@ -15,24 +15,75 @@ const SignUpForm = () => {
     mobile:""
   })
 
-  const {formData,setformData,handleGetData} = useContext(AuthContext)
+  const {formData,setformData,handleUserLogin} = useContext(AuthContext)
   const toast = useToast()
     const handleLoginSubmit = (e)=>{
-        handleGetData(e)
+      handleUserLogin(e)
     }
   const [login, setLogin] = useState(isAuth)
 
-  const handleSubmit = (e)=>{
+  let checkRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[#@$%^&*!])(?=.{8})/
+
+  const handleSubmit = async(e)=>{
     e.preventDefault()
-    //console.log(data)
-    localStorage.setItem("user",JSON.stringify(data))
-    toast({
-      title: 'Account created.',
-      description: "We've created your account for you.",
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
+    
+    if(checkRegex.test(data.password)){
+      console.log(data)
+     await fetch("https://cheersapi.onrender.com/user/register"
+     , {
+        method : "POST",
+        body : JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+          },
     })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res)
+       if(res.msg === "User already exist, please login")
+       {
+        toast({
+          title: 'User already exist',
+          description: "User already exist, please login",
+          status: 'error',
+          duration: 1500,
+          isClosable: true,
+          position:"top"
+        })
+       }
+     if (res.msg === "New user registered")
+      {
+        toast({
+          title: 'Account created.',
+          description: "We've created your account for you. Please Login",
+          status: 'success',
+          duration: 4500,
+          isClosable: true,
+          position:"top"
+        })
+        setLogin(true)
+        //setTimeout(()=>{ nav("/login",{replace:true})},1000)
+      }
+    })
+    }else{
+          toast({
+            title: 'Invalid Password',
+            description: "Password length is minimum 8, it includes at least one Uppercase letter, special character & number",
+            status: 'error',
+            duration: 5500,
+            isClosable: true,
+            position:"top"
+          })
+
+        }
+   // localStorage.setItem("user",JSON.stringify(data))
+    // toast({
+    //   title: 'Account created.',
+    //   description: "We've created your account for you.",
+    //   status: 'success',
+    //   duration: 9000,
+    //   isClosable: true,
+    // })
   }
   return (
     
@@ -48,7 +99,18 @@ const SignUpForm = () => {
         </FormControl>
         <FormControl id="password">
           <FormLabel fontSize="2xl">Password</FormLabel>
-          <Input type="password" fontSize="2xl" onChange={(e)=> setformData({...formData, password:e.target.value})} required/>
+          <InputGroup>
+          <Input type={showPassword ? 'text' : 'password'} fontSize="2xl" onChange={(e)=> setformData({...formData, password:e.target.value})} required/>
+          <InputRightElement h={'full'}>
+          <Button 
+            variant={'lightMode'}
+            onClick={() =>
+              setShowPassword((showPassword) => !showPassword)
+            }>
+            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+          </Button>
+        </InputRightElement>
+        </InputGroup>
         </FormControl>
         <Button type="submit" style={{height:"45px", fontSize:"15px", backgroundColor:"rgb(119, 18, 88)", color:"white"}}>
           Login
@@ -78,7 +140,18 @@ const SignUpForm = () => {
         </FormControl>
         <FormControl id="password">
           <FormLabel fontSize="2xl">Password</FormLabel>
-          <Input type="password" fontSize="2xl" onChange={(e)=> setData({...data, password:e.target.value})} required/>
+          <InputGroup>
+          <Input type={showPassword ? 'text' : 'password'} fontSize="2xl" onChange={(e)=> setData({...data, password:e.target.value})} required/>
+          <InputRightElement h={'full'}>
+          <Button 
+            variant={'lightMode'}
+            onClick={() =>
+              setShowPassword((showPassword) => !showPassword)
+            }>
+            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+          </Button>
+        </InputRightElement>
+        </InputGroup>
         </FormControl>
         <Button type="submit" style={{height:"45px", fontSize:"15px", backgroundColor:"rgb(119, 18, 88)", color:"white"}}>
           Sign Up

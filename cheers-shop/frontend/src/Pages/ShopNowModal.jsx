@@ -19,7 +19,7 @@ const ShopNowModal = ({ isOpen, onClose, total, item }) => {
     const handleshopNow = ()=>{
         toast({
             title: 'Thank You!',
-            description: "Your order if confirm",
+            description: "Your order is confirm",
             status: 'success',
             duration: 9000,
             isClosable: true,

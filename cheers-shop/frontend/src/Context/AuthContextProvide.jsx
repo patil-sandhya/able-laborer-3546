@@ -11,42 +11,69 @@ const AuthContextProvide = (props)=>{
     })
     const [isAuth, setisAuth] = useState(false)
     const toast = useToast()
-    const handleAuth = ()=>{
-        localStorage.setItem("auth",true)
-        setisAuth(true)
-        navigateHome("/cart")
-        toast({
-            title: `Login Successful !`,
-            status: 'error',
-            isClosable: true,
-          })
-    }
-    const handleGetData = (e)=>{
+   
+    const handleUserLogin = async(e)=>{
         e.preventDefault()
-        let userData = JSON.parse(localStorage.getItem("user")) || []
-        if(userData.length == 0){
-            console.log("userData")
-            toast({
-                title: `User Not Found !`,
-                status: 'error',
-                isClosable: true,
-              })
-        }else{
-            console.log(userData)
-            if(userData.email === formData.email && userData.password === formData.password){
-                handleAuth()
-            }else{
-                toast({
-                    title: `Wrong Credential !`,
-                    status: 'error',
-                    isClosable: true,
-                  })
-            }
-        }
         
+        await fetch("https://cheersapi.onrender.com/user/login", {
+            method : "POST",
+            body : JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json',
+              },
+        })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          if(res.msg=== "invalid credential")
+          {
+           toast({
+             title: 'Invalid Details',
+             description: "Invalid Email or Password.",
+             status: 'error',
+             duration: 1500,
+             isClosable: true,
+             position:"top"
+           })
+          }else if (res.msg === "please try again later")
+          {
+            toast({
+              title: 'Login Failed.',
+              description: "Wrong email or Password.",
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+              position:"top"
+            })
+          }else if(res.msg === "Login successfull")
+          {
+            toast({
+              title: 'Logged in Successfull.',
+              description: "Welcome",
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
+              position:"top"
+            })
+            let user = {
+                name: res.name,
+                email: res.email,
+                address: res.address,
+                mobile: res.mobile,
+                token: res.token
+            }
+            localStorage.setItem("user", JSON.stringify(user))
+            localStorage.setItem("auth",true)
+            setisAuth(true)
+            navigateHome("/cart")
+          }         
+        }).catch((err) => console.log(err))
+
+      
     }
+
     return( 
-        <AuthContext.Provider value={{isAuth,formData,setformData,handleGetData}}>
+        <AuthContext.Provider value={{isAuth,formData,setformData,handleUserLogin}}>
         {props.children}
         </AuthContext.Provider>
     )
